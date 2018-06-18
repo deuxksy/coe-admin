@@ -1,0 +1,43 @@
+spring:
+  application:
+    name: coe-admin-server
+  profiles:
+    active:
+      - insecure
+
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+---
+spring:
+  profiles: insecure
+
+
+---
+spring:
+profiles: secure
+
+spring:
+  security:
+    user:
+      name: "user"
+      password: "user"
+
+eureka:
+  instance:
+    metadata-map:
+      user.name: ${spring.security.user.name}
+      user.password: ${spring.security.user.password}
